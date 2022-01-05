@@ -126,6 +126,19 @@
           }
         });
 
+        startButton.addEventListener("click", (event) => {
+          //démarre la partie
+          playing = true;
+          //inittialisation du compte a rebours
+          // Initialisation de la date de début
+          startTime = new Date();
+          //réinitialisation de l'interface
+          reset();
+          //démarrage du compte à rebours
+          countdown();
+
+        });
+
 
         /* Fonctions*/
 
