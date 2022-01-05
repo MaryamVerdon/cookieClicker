@@ -91,21 +91,40 @@
 
         /* Variables globales*/
 
-        // Nombre de clics sur le cookie
-        var clickCount = 0;
+      // Booléen indiquant si la partie est en cours
+      var playing = false;
 
-        //Boutton de démarrage
-        let startButton = document.querySelector("button");
+      // Date de début de la partie
+      var startTime;
 
-        //Zonz d'affichage du temps restant
-        let timeDisplay = document.querySelector("p > span");
+      // Nombre de clics sur le cookie
+      var clickCount = 0;
 
-        //Zone d'affichage du score
-        let score = document.querySelector("figure > span");
+      // Zone d'affichage du score
+      score = document.querySelector("figure > span");
+
+      // Paragraphe pour l'affichage du temps restant
+      timeDisplay = document.querySelector("p");
+
+      // Zone d'affichage des secondes restantes
+      time = document.querySelector("p > span");
+
+      // Bouton de démarrage
+      var startButton = document.querySelector("button");
+
+      // Image du cookie
+      var cookieImage = document.querySelector("figure > img");
+
 
 
         /* Ecouteurs d'évenements*/
-
+        cookieImage.addEventListener("click" , (event) => {
+          if(playing) {
+            //Mise à jour du score
+            clickCount++;
+            score.textContent = clickCount; 
+          }
+        });
 
 
         /* Fonctions*/
@@ -118,6 +137,36 @@
           // Remise à zéro du score
           clickCount = 0;
           score.textContent = 0;
+        }
+
+        function countdown() {
+          // Calcul du temps restant
+          var now = new Date();
+          var remainingTime = 15 - Math.floor((now - startTime)/1000);
+
+          if (remainingTime == 0) { // Si le temps est écoulé
+            // Fin de la partie
+            playing = false;
+            // Affiche du bouton start
+            startButton.classList.toggle("hidden");
+            // Cache le temps restant
+            timeDisplay.classList.toggle("hidden");
+          }
+          else {
+             // Mise à jour des secondes restantes
+            time.textContent = remainingTime + " seconds left!";
+
+          // Modification de la couleur du texte en fonction du temps
+          if (remainingTime<=5)
+            time.style.color = "red";
+          else if (remainingTime<=10)
+            time.style.color = "orange";
+          else
+            time.style.color = "white";
+
+          // Appel de la fonction countdown dans 1 seconde
+          window.setTimeout(countdown, 1000);
+          }
         }
   
       </script>
